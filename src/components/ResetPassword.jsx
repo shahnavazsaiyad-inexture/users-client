@@ -27,7 +27,7 @@ const ResetPassword = () => {
     <>
     <form onSubmit={(e) => {e.preventDefault(); resetpassword()}}>
         <Typography variant='h3'>Reset Password</Typography>
-        <TextField value={newPassword} onChange={(e) => setNewPassword(e.target.value)} label='Password' /><br /><br />
+        <TextField value={newPassword} type='password' onChange={(e) => setNewPassword(e.target.value)} label='Password' /><br /><br />
         <Button type='submit' variant='outlined' >Reset Password</Button>
     </form>
 </>

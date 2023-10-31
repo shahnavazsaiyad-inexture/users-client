@@ -22,7 +22,7 @@ const Profile = () => {
     const [lastName, setLastName] = useState('')
     const [role, setRole] = useState('')
     const [email, setEmail] = useState('')
-    const [addresses, setAddresses] = useState(null);
+    const [addresses, setAddresses] = useState([]);
     const [addressNumber, setAddressNumber] = useState(1)
 
 

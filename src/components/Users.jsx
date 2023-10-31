@@ -13,6 +13,12 @@ const Users = () => {
 
     useEffect(() => {
 
+        fetchUsers();
+      
+        
+    }, []);
+
+    const fetchUsers = () => {
         axios.get(`http://localhost:8080/users`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}})
                 .then(response => {
                     if(response != null && !response.data.error){
@@ -24,16 +30,14 @@ const Users = () => {
                     }
                 })
                 .catch(e => alert(e.message))
-      
-        
-    }, []);
-
+    }
     const deleteUser = (userId) => {
         const selection = window.confirm("Are you sure you want to delete user?");
         if(selection){
             axios.delete(`http://localhost:8080/users/${userId}`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}})
                     .then(response => {
                         alert(response.data.message)
+                        fetchUsers();
                     })
                     .catch(e => alert(e.message));
         }
