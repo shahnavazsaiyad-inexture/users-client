@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import Address from './Address';
 import axios from 'axios';
 
@@ -27,6 +27,8 @@ const Profile = () => {
 
 
     const [errorMessage, setErrorMessage] = useState('');
+    const [firstNameError, setFirstNameError] = useState('')
+    const [lastNameError, setLastNameError] = useState('')
     const [usernameError, setUsernameError] = useState('')
     const [emailError, setEmailError] = useState('')
 
@@ -50,7 +52,7 @@ const Profile = () => {
                   setAddresses(userAddresses);
               }else{
                 alert(response.data.message)
-                navigate('/login')
+                navigate('/')
               }
             })
             .catch(e => console.log(e.message));
@@ -101,6 +103,14 @@ const Profile = () => {
                     if(response.data.message == 'Validation Error!'){
                         setUsernameError(response.data.data.username)
                         setEmailError(response.data.data.email)
+                        setFirstNameError(response.data.data.firstName)
+                        setLastNameError(response.data.data.lastName)
+
+                        for(let field in response.data.data){
+                          if(field.startsWith('addresses')){
+                            setErrorMessage('Address section have some incomplete fields!')
+                          }
+                        }
                     }else{
                         setErrorMessage(response.data.message);
                     }
@@ -113,6 +123,8 @@ const Profile = () => {
       setUsernameError('')
       setEmailError('')
       setErrorMessage('')
+      setFirstNameError('')
+      setLastNameError('')
     }
 
     return (
@@ -143,7 +155,18 @@ const Profile = () => {
 
       }
       <br />
-      
+      {
+        auth.user.role == 'Admin' &&
+        <FormControl>
+        <InputLabel id="role">Role</InputLabel>
+  
+        <Select labelId='role' label='Role' value={role} onChange={(e) => setRole(e.target.value)}>
+          <MenuItem value='Admin'>Admin</MenuItem>
+          <MenuItem value='User'>User</MenuItem>
+        </Select>
+      </FormControl>
+      }
+      <br />      
       {
         addresses?.map((address, i) => (
             <Address key={address.number} address={address} index={i+1} removeAddress={removeAddress} updateAddress={updateAddress} /> 

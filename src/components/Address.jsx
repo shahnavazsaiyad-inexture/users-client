@@ -34,7 +34,7 @@ const Address = ({address, index, removeAddress, updateAddress}) => {
         <TextField value={city} onChange={(e) => {setCity(e.target.value)}} id="outlined-basic" label="City" variant="outlined" /><br /><br />
         <TextField value={state} onChange={(e) => {setState(e.target.value)}} id="outlined-basic" label="State" variant="outlined" /> &nbsp;
         <TextField value={country} onChange={(e) => {setCountry(e.target.value)}} id="outlined-basic" label="Country" variant="outlined" /><br /><br />
-        <TextField value={pincode} onChange={(e) => {setPincode(e.target.value)}} id="outlined-basic" label="Pincode" variant="outlined" />
+        <TextField type='number' value={pincode} onChange={(e) => {setPincode(e.target.value)}} id="outlined-basic" label="Pincode" variant="outlined" />
 
         {(address.number != 1) && <>&nbsp; <Button variant='outlined' onClick={() => removeAddress(address.number)}>Remove</Button></>}
     </>

@@ -3,6 +3,9 @@ Frontend application form users app
 
 This application is developed in React JS
 
+NodeJS Version: V20.9.0 
+Npm version: 10.1.0
+
 Steps to setup project:
 1. Install latest version of NodeJS & npm (if not installed already)
 2. Open project directory in terminal or VS code

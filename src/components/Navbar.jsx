@@ -24,10 +24,10 @@ const Navbar = () => {
                     }
 
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        <NavLink to={`/profile/${auth?.user?.userId}`} style={{textDecoration: 'none', color: '#fff', padding: '10px'}}>Profile</NavLink>
+                        { auth.isLoggedIn() && <NavLink to={`/profile/${auth?.user?.userId}`} style={{textDecoration: 'none', color: '#fff', padding: '10px'}}>Profile</NavLink>}
                         </Typography>
                         {
-                          auth.user ?
+                          auth.isLoggedIn() ?
                             <Typography variant="h6" >
                               <NavLink to={'/logout'} style={{ textDecoration: 'none', color: '#fff' }}>Logout</NavLink>
                             </Typography>
