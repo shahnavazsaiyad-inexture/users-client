@@ -11,3 +11,9 @@ Steps to setup project:
 2. Open project directory in terminal or VS code
 3. run `npm install` command
 4. run `npm start` command 
+
+
+
+Steps to start run project in Docker:   
+1. Create Docker Image: `docker build -t users-client .`
+2. Run container from Image: `docker run --name users-client -d -p 80:80 users-client`
