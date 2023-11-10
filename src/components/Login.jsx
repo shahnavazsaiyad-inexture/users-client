@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useAuth } from './auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { red } from '@mui/material/colors';
+import { GitHub } from '@mui/icons-material';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -22,13 +23,15 @@ const Login = () => {
 
     const login = () => {
         clearErrors();
-        const data = {
-            username: username,
-            password: password
-        }
-        axios.post("http://localhost:8080/login", data)
+        const data = new URLSearchParams();
+        data.append('username', username);
+        data.append('password', password);
+
+        axios.post("http://localhost:8080/login", data, {headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }, withCredentials: true})
                 .then((response) => {
-                    
+                    console.log(response)            
                     if(response != null && !response.data.error){
                         auth.login(response.data.data);
                         navigate('/');
@@ -67,9 +70,11 @@ const Login = () => {
                     errorMessage && <><Typography variant='caption' style={{color: 'red'}}>{errorMessage}</Typography><br /><br /></>
                     
                 }
-                <Button onClick={login} type='submit' variant="contained">Login</Button><br />< br/>
+                <Button onClick={login} type='submit' variant="contained">Login</Button> &nbsp;                
+                <a href="http://localhost:8080/oauth2/authorization/github"><Button variant='outlined'> <GitHub /> Github</Button></a><br /><br />
                 Click <Link to='/forgotpassword'>Here</Link> if you forgot your password!<br /><br />
                 Click <Link to='/register'>Here</Link> for new Registration!
+
             </form>
         </>
   )

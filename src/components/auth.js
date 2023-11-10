@@ -1,3 +1,6 @@
+import { Cookie } from "@mui/icons-material";
+import axios from "axios";
+import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 
 
@@ -11,7 +14,6 @@ export const AuthProvider = ({children}) => {
         loggedInUser = {
             username: localStorage.getItem("username"),
             role: localStorage.getItem("role"),
-            jwtToken: localStorage.getItem("jwtToken"),
             userId: localStorage.getItem("userId")
         };
     }
@@ -24,7 +26,6 @@ export const AuthProvider = ({children}) => {
         setUser(user);
         localStorage.setItem("username", user.username);
         localStorage.setItem("role", user.role);
-        localStorage.setItem("jwtToken", user.jwtToken);
         localStorage.setItem("userId", user.userId);
     }
 
@@ -32,13 +33,15 @@ export const AuthProvider = ({children}) => {
         setUser(null)
         localStorage.removeItem("username");
         localStorage.removeItem("role");
-        localStorage.removeItem("jwtToken");
         localStorage.removeItem("userId");
-        
+
+        axios.get('http://localhost:8080/logout', {withCredentials: true})
+                .then(response => console.log(response))
+                .catch(e => console.log(e));
     }
 
     const isLoggedIn = () => {
-        return (user && user.jwtToken && user.userId && user.role && localStorage.getItem("userId"))  
+        return (user && user.userId && user.role && localStorage.getItem("userId"))  
     }
 
     return (

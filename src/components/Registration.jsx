@@ -3,14 +3,18 @@ import { Button, TextField, Typography } from '@mui/material';
 import Address from './Address';
 import axios from 'axios';
 
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const Registration = () => {
 
+  const params = useParams();
+  
 
   const navigate = useNavigate();
     
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(params.username);
+    const [authserver, setAuthServer] = useState(params.authserver);
+
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [firstName, setFirstName] = useState('')
@@ -27,6 +31,9 @@ const Registration = () => {
     const [passwordError, setPasswordError] = useState('')
     const [emailError, setEmailError] = useState('')
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
+
+   
+  
     
     const addAddress = () => {
       setAddresses([...addresses, {number: addressNumber+1, street: '', city: '', state: '', country: '', pincode: ''}])
@@ -65,7 +72,8 @@ const Registration = () => {
         password: password,
         addresses: addresses,
         confirmPassword: confirmPassword,
-        role: 'User'
+        role: 'User',
+        authServer: authserver
       }
 
       axios.post("http://localhost:8080/register", requestObject)
@@ -114,10 +122,11 @@ const Registration = () => {
     }
     return (
     <>
+    
     <form onSubmit={(e) => {e.preventDefault(); register()}}>
       <Typography variant='h3' gutterBottom>Registration</Typography>
       
-      <TextField  value={username} onChange={(e) => {setUsername(e.target.value); }}  id="outlined-basic" label="Username" variant="outlined" /><br />
+      <TextField  value={username} onChange={(e) => {setUsername(e.target.value); }}  id="outlined-basic" label="Username" variant="outlined" InputProps={{readOnly: params.authserver ? true : false}} /><br />
       {
         usernameError && 
         <Typography  variant="caption" style={{color:'red'}} display="block" gutterBottom>
@@ -157,25 +166,30 @@ const Registration = () => {
       }
       <br />
       
-
-      <TextField  value={password} onChange={(e) => {setPassword(e.target.value)}}  id="outlined-basic" label="Password" variant="outlined" type='password' /><br />
       {
-        passwordError && 
-        <Typography  variant="caption" style={{color:'red'}} display="block" gutterBottom>
-            {passwordError}
-        </Typography>    
+        !params.authserver && 
+        <>
+          <TextField  value={password} onChange={(e) => {setPassword(e.target.value)}}  id="outlined-basic" label="Password" variant="outlined" type='password' /><br />
+          {
+            passwordError && 
+            <Typography  variant="caption" style={{color:'red'}} display="block" gutterBottom>
+                {passwordError}
+            </Typography>    
 
-      }
-      <br />
+          }
+          <br />
 
 
-      <TextField  value={confirmPassword} onChange={(e) => {setConfirmPassword(e.target.value)}}  id="outlined-basic" label="Confirm Password" variant="outlined" type='password' /><br />
-      {
-        confirmPasswordError && 
-        <Typography  variant="caption" style={{color:'red'}} display="block" gutterBottom>
-            {confirmPasswordError}
-        </Typography>    
+          <TextField  value={confirmPassword} onChange={(e) => {setConfirmPassword(e.target.value)}}  id="outlined-basic" label="Confirm Password" variant="outlined" type='password' /><br />
+          {
+            confirmPasswordError && 
+            <Typography  variant="caption" style={{color:'red'}} display="block" gutterBottom>
+                {confirmPasswordError}
+            </Typography>    
 
+          }
+        
+        </>
       }
       <br />
 

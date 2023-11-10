@@ -26,6 +26,7 @@ function App() {
           <Route path='/users' element={<AuthenticatedRoute><Users /></AuthenticatedRoute>} />
           <Route path='/logout' element={<Logout />} />
           <Route path='/register' element={<Registration />} />
+          <Route path='/register/:authserver/:username' element={<Registration />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/resetpassword/:token' element={<ResetPassword />} />
           <Route path='*' element={<NotFound />} />

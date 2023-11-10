@@ -33,7 +33,7 @@ const Profile = () => {
     const [emailError, setEmailError] = useState('')
 
     useEffect(() => {
-      axios.get(`http://localhost:8080/users/${userId}`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}})
+      axios.get(`http://localhost:8080/users/${userId}`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}, withCredentials: true})
             .then(response => {
               if(response != null && !response.data.error){
                   const user = response.data.data;
@@ -94,7 +94,7 @@ const Profile = () => {
         addresses: addresses,
         role: role
       }
-      axios.post("http://localhost:8080/users", requestObject,  {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}})
+      axios.post("http://localhost:8080/users", requestObject,  {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}, withCredentials: true})
             .then((response) => {
                 
                 if(response != null && !response.data.error){

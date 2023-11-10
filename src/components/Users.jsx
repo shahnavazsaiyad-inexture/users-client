@@ -19,7 +19,7 @@ const Users = () => {
     }, []);
 
     const fetchUsers = () => {
-        axios.get(`http://localhost:8080/users`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}})
+        axios.get(`http://localhost:8080/users`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}, withCredentials: true})
                 .then(response => {
                     if(response != null && !response.data.error){
                         setUsers(response.data.data)
@@ -34,7 +34,7 @@ const Users = () => {
     const deleteUser = (userId) => {
         const selection = window.confirm("Are you sure you want to delete user?");
         if(selection){
-            axios.delete(`http://localhost:8080/users/${userId}`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}})
+            axios.delete(`http://localhost:8080/users/${userId}`, {headers: {'Authorization': `Bearer ${auth.user.jwtToken}`}, withCredentials: true})
                     .then(response => {
                         alert(response.data.message)
                         fetchUsers();
